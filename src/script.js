@@ -3,6 +3,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import GUI from "lil-gui";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
+import { GroundedSkybox } from "three/addons/objects/GroundedSkybox.js";
 
 /*
 =======================Loader==================
@@ -12,6 +13,7 @@ import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 const gltf = new GLTFLoader();
 const rgbeLoader = new RGBELoader();
 const cubeTextureLoader = new THREE.CubeTextureLoader();
+const textureLoader = new THREE.TextureLoader();
 
 /**
  * Base
@@ -83,27 +85,51 @@ gui
 // scene.background = environmentMap;
 
 // HDR(RGBE ) equirectangular
-rgbeLoader.load("./environmentMaps/0/2k.hdr", (environmentMap) => {
+// rgbeLoader.load("./environmentMaps/blender2k.hdr", (environmentMap) => {
+//   environmentMap.mapping = THREE.EquirectangularReflectionMapping;
+//   scene.background = environmentMap;
+//   scene.environment = environmentMap;
+//   console.log(environmentMap);
+// });
+
+// TextureLoader
+// const environmentMap = textureLoader.load(
+//   "./environmentMaps/blockadesLabsSkybox/anime_art_style_japan_streets_with_cherry_blossom_.jpg"
+// );
+// console.log(environmentMap);
+
+// environmentMap.mapping = THREE.EquirectangularReflectionMapping;
+// environmentMap.colorSpace = THREE.SRGBColorSpace;
+
+// scene.background = environmentMap;
+// scene.environment = environmentMap;
+
+// Ground projected skybox
+
+rgbeLoader.load("./environmentMaps/2/2k.hdr", (environmentMap) => {
   environmentMap.mapping = THREE.EquirectangularReflectionMapping;
-  scene.background = environmentMap;
   scene.environment = environmentMap;
-  console.log(environmentMap);
+
+  // skybox
+  const skybox = new GroundedSkybox(environmentMap, 15, 70);
+  skybox.position.y = 15;
+  scene.add(skybox);
 });
 
 /**
  * Torus Knot
  */
-const torusKnot = new THREE.Mesh(
-  new THREE.TorusKnotGeometry(1, 0.4, 100, 16),
-  new THREE.MeshStandardMaterial({
-    roughness: 0.3,
-    metalness: 1,
-    color: "0xaaaaaa",
-  })
-);
-torusKnot.position.y = 4;
-torusKnot.position.x = -4;
-scene.add(torusKnot);
+// const torusKnot = new THREE.Mesh(
+//   new THREE.TorusKnotGeometry(1, 0.4, 100, 16),
+//   new THREE.MeshStandardMaterial({
+//     roughness: 0.3,
+//     metalness: 1,
+//     color: "0xaaaaaa",
+//   })
+// );
+// torusKnot.position.y = 4;
+// torusKnot.position.x = -4;
+// scene.add(torusKnot);
 
 /*
 Models 
