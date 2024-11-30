@@ -119,7 +119,7 @@ gui
 // Real time environment Map ----------------------------
 
 const environmentMap = textureLoader.load(
-  "./environmentMaps/blockadesLabsSkybox/interior_views_cozy_wood_cabin_with_cauldron_and_p.jpg"
+  "./environmentMaps/blockadesLabsSkybox/2050.jpg"
 );
 
 environmentMap.mapping = THREE.EquirectangularReflectionMapping;
@@ -201,7 +201,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100
 );
-camera.position.set(4, 5, 4);
+camera.position.set(4, 5, 10);
 scene.add(camera);
 
 // Controls
@@ -231,6 +231,8 @@ const tick = () => {
     holyDonut.rotation.x = Math.sin(elapsedTime) * 2;
     cubeCamera.update(renderer, scene);
   }
+  // rotating torusknot
+  torusKnot.rotation.y = elapsedTime * 0.5;
 
   // Update controls
   controls.update();
